@@ -6,11 +6,12 @@ Modify the title & the URL of your novel in scraper.py. Once it's done, simply r
 
 I cannot stress enough that setting up an automated task (if you're on Windows) that executes the script every day at a set time is extremely important, as you wouldn't get realistic data on a fixed 24-hour span without it.
 
-# Version 1.1 (June 27th 2020)
+# Versions
+## Version 1.1 (June 27th 2020)
 Additions:
 - The output is now an Excel spreadsheet instead of a regular text file. This makes the output cleaner.
 
-# Version 1.0 (June 27th 2020)
+## Version 1.0 (June 27th 2020)
 First version of the snippet. Currently extracts & stores in a text file:
 - Readers count
 - Viewers count
