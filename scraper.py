@@ -2,6 +2,7 @@
 # Ranks are language-dependant, so they wouldn't be scraped correctly
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
+from openpyxl import Workbook, load_workbook
 from datetime import datetime
 import os
 
@@ -21,27 +22,39 @@ for i in stats.children:
     if(i != '\n'):
         leaves.append(i.contents[0])
 
-# Slice those strings into numbers (careful, slicing will fail for non-English pages)
-reads = leaves[0][1:-6]
-votes = leaves[1][1:-6]
-parts = leaves[2][:-11]
+# Slice those strings into numbers
+reads = leaves[0][1:-6]                 # Removes last 6 chars: "100 Reads" - " Reads" = 100
+votes = leaves[1][1:-6]                 # Removes last 6 chars: "100 Votes" - " Votes" = 100
+parts = leaves[2][:-11]                 # Removes last 11 chars: "7 Part Story" - " Part Story" = 7
 
-# Populate text file with numerical stats
-filename = title + ' stats.txt'
+# Populate Excel file with numerical stats
+filename = title + ' stats.xlsx'
 existing_file = False
 if(os.path.isfile(filename)):
     existing_file = True
 
-f = open(filename, "a")
-if existing_file == False:
-    f.write('------------- --------- --------- ---------\n')
-    f.write('DATE          READS     VOTES     PARTS    \n')
-    f.write('------------- --------- --------- ---------\n')
+row = 1
+column = 1
+
+if not existing_file:
+
+    wb = Workbook()
+    ws = wb.active
+    header = [ "DATE", "READS", "VOTES", "PARTS" ]
+    ws.append(header)
+    row += 1
+else:
+    wb = load_workbook(filename=filename)
+    ws = wb.active
+    row = ws.max_row + 1
+
+ws.column_dimensions['A'].width = 20      # Bigger row to display full date
 
 today = datetime.today().strftime('%d/%m/%Y')
 
-f.write(today + ' '*(14-len(today)))
-f.write(reads + ' '*(10-len(reads)))
-f.write(votes + ' '*(10-len(votes)))
-f.write(parts + '\n')
-f.close()
+data = [ today, reads, votes, parts ]
+for item in data:
+    ws.cell(row, column, item)
+    column += 1
+
+wb.save(filename)
