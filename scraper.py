@@ -36,11 +36,14 @@ if(os.path.isfile(filename)):
 row = 1
 column = 1
 
-if not existing_file:
+inc_reads = 0
+inc_votes = 0
+inc_parts = 0
 
+if not existing_file:
     wb = Workbook()
     ws = wb.active
-    header = [ "DATE", "READS", "VOTES", "PARTS" ]
+    header = [ "DATE", "READS", "", "VOTES", "", "PARTS", "" ]
     ws.append(header)
     row += 1
 else:
@@ -48,13 +51,26 @@ else:
     ws = wb.active
     row = ws.max_row + 1
 
+    # Increments from yesterday
+    yesterday = ws[ws.max_row]
+    inc_reads = int(reads) - int(yesterday[1].value)
+    inc_votes = int(votes) - int(yesterday[3].value)
+    inc_parts = int(parts) - int(yesterday[5].value)
+
 ws.column_dimensions['A'].width = 20      # Bigger row to display full date
 
 today = datetime.today().strftime('%d/%m/%Y')
 
-data = [ today, reads, votes, parts ]
+data = [ today, reads, inc_reads, votes, inc_votes, parts, inc_parts ]
+
 for item in data:
-    ws.cell(row, column, item)
+    if (column == 3 or column == 5 or column == 7):
+        if item == 0:
+            ws.cell(row, column, '')        # If incr. is null, don't output it
+        else:
+            ws.cell(row, column, '(+' + str(item) + ')')
+    else:
+        ws.cell(row, column, item)
     column += 1
 
 wb.save(filename)
