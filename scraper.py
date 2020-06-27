@@ -2,7 +2,7 @@
 # Ranks are language-dependant, so they wouldn't be scraped correctly
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 from datetime import datetime
 import os
 
@@ -34,19 +34,26 @@ if(os.path.isfile(filename)):
     existing_file = True
 
 wb = Workbook()
-ws = wb.active
 
-row = 0
-column = 0
+
+row = 1
+column = 1
 
 if not existing_file:
     header = [ "DATE", "READS", "VOTES", "PARTS" ]
+    ws = wb.active
     ws.append(header)
     row += 1
+else:
+    wb = load_workbook(filename=filename)
+    ws = wb.active
+    row = ws.max_row + 1
 
 today = datetime.today().strftime('%d/%m/%Y')
 
 data = [ today, reads, votes, parts ]
-ws.append(data)
+for item in data:
+    ws.cell(row, column, item)
+    column += 1
 
 wb.save(filename)
