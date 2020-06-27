@@ -1,6 +1,9 @@
 # WattpadStats
 Wattpad Stats tracks your Wattpad story's stats using a web scraper. It helps you track your progress and the exposure of your novel on the platform. 
 
+# How does it work?
+Modify the title & the URL of your novel in scraper.py. Once it's done, simply run the Python script. I'd recommend you to set up an automated task (if you're on Windows) that executes the script every day at a set time, so you get realistic data on a fixed 24-hour span.
+
 # Version 1.0
 First version of the snippet. Currently extracts & stores in a text file:
 - Readers count
