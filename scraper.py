@@ -29,19 +29,27 @@ parts = leaves[2][:-11]
 
 # Populate Excel file with numerical stats
 filename = title + ' stats.xlsx'
-# existing_file = False
-# if(os.path.isfile(filename)):
-#     existing_file = True
+existing_file = False
+if(os.path.isfile(filename)):
+    existing_file = True
 
 workbook = xlsxwriter.Workbook(filename)
 worksheet = workbook.add_worksheet()
+
 row = 0
 column = 0
+
+if not existing_file:
+    header = [ "DATE", "READS", "VOTES", "PARTS" ]
+    for item in header:
+        worksheet.write(row, column, item)
+        column += 1
+    row += 1
+    column = 0
 
 today = datetime.today().strftime('%d/%m/%Y')
 
 data = [ today, reads, votes, parts ]
-
 
 for item in data:
     worksheet.write(row, column, item)
