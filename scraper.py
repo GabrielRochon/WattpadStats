@@ -57,10 +57,14 @@ else:
     inc_votes = int(votes) - int(yesterday[3].value)
     inc_parts = int(parts) - int(yesterday[5].value)
 
-ws.column_dimensions['A'].width = 20      # Bigger row to display full date
+# Sets column sizes
+columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G']       # Pretty sure there's a better way to do it, but for now it's fine
+widths = [20, 10, 5, 10, 5, 10, 5]
+for (width, col) in zip(widths, columns):
+    ws.column_dimensions[col].width = width
 
+# Actual output
 today = datetime.today().strftime('%d/%m/%Y')
-
 data = [ today, reads, inc_reads, votes, inc_votes, parts, inc_parts ]
 
 for item in data:
