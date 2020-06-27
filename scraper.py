@@ -48,6 +48,8 @@ else:
     ws = wb.active
     row = ws.max_row + 1
 
+ws.column_dimensions['A'].width = 20      # Bigger row to display full date
+
 today = datetime.today().strftime('%d/%m/%Y')
 
 data = [ today, reads, votes, parts ]
