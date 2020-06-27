@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 from datetime import datetime
 import os
+import xlsxwriter
 
 # ENTER YOUR STORY INFO HERE ##################################################
 url = 'https://www.wattpad.com/story/226573279-virtuel'
@@ -26,22 +27,24 @@ reads = leaves[0][1:-6]
 votes = leaves[1][1:-6]
 parts = leaves[2][:-11]
 
-# Populate text file with numerical stats
-filename = title + ' stats.txt'
-existing_file = False
-if(os.path.isfile(filename)):
-    existing_file = True
+# Populate Excel file with numerical stats
+filename = title + ' stats.xlsx'
+# existing_file = False
+# if(os.path.isfile(filename)):
+#     existing_file = True
 
-f = open(filename, "a")
-if existing_file == False:
-    f.write('------------- --------- --------- ---------\n')
-    f.write('DATE          READS     VOTES     PARTS    \n')
-    f.write('------------- --------- --------- ---------\n')
+workbook = xlsxwriter.Workbook(filename)
+worksheet = workbook.add_worksheet()
+row = 0
+column = 0
 
 today = datetime.today().strftime('%d/%m/%Y')
 
-f.write(today + ' '*(14-len(today)))
-f.write(reads + ' '*(10-len(reads)))
-f.write(votes + ' '*(10-len(votes)))
-f.write(parts + '\n')
-f.close()
+data = [ today, reads, votes, parts ]
+
+
+for item in data:
+    worksheet.write(row, column, item)
+    column += 1
+
+workbook.close()
