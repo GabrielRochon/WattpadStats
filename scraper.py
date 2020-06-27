@@ -64,13 +64,16 @@ today = datetime.today().strftime('%d/%m/%Y')
 data = [ today, reads, inc_reads, votes, inc_votes, parts, inc_parts ]
 
 for item in data:
-    if (column == 3 or column == 5 or column == 7):
+    if column == 3 or column == 5 or column == 7:
         if item == 0:
             ws.cell(row, column, '')        # If incr. is null, don't output it
         else:
             ws.cell(row, column, '(+' + str(item) + ')')
     else:
-        ws.cell(row, column, item)
+        if column == 2 or column == 4 or column == 6:
+            ws.cell(row, column, int(item))
+        else:
+            ws.cell(row, column, item)
     column += 1
 
 wb.save(filename)
