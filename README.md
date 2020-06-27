@@ -9,6 +9,7 @@ I cannot stress enough that setting up an automated task (if you're on Windows) 
 # Versions
 ## Version 1.1 (June 27th 2020)
 Additions:
+- Increments from yesterday are shown next to reads, votes and parts.
 - The output is now an Excel spreadsheet instead of a regular text file. This makes the output cleaner.
 
 ## Version 1.0 (June 27th 2020)
@@ -21,5 +22,4 @@ First version of the snippet. Currently extracts & stores in a text file:
 - Rankings
   - Although this would only work for the English version of Wattpad, as it is the basic language when accessing it via a fresh browser. This is problematic for people like me which publish stories in another language.
   
-- Increase from yesterday
-  - How many reads/viewers/parts/ranks(?) have I earned since the last time data was extracted?
+- And more... feel free to message me your ideas => rochon.gabriel1@gmail.com
