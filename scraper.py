@@ -22,10 +22,10 @@ for i in stats.children:
     if(i != '\n'):
         leaves.append(i.contents[0])
 
-# Slice those strings into numbers (careful, slicing will fail for non-English pages)
-reads = leaves[0][1:-6]
-votes = leaves[1][1:-6]
-parts = leaves[2][:-11]
+# Slice those strings into numbers
+reads = leaves[0][1:-6]                 # Removes last 6 chars: "100 Reads" - " Reads" = 100
+votes = leaves[1][1:-6]                 # Removes last 6 chars: "100 Votes" - " Votes" = 100
+parts = leaves[2][:-11]                 # Removes last 11 chars: "7 Part Story" - " Part Story" = 7
 
 # Populate Excel file with numerical stats
 filename = title + ' stats.xlsx'
@@ -33,15 +33,14 @@ existing_file = False
 if(os.path.isfile(filename)):
     existing_file = True
 
-wb = Workbook()
-
-
 row = 1
 column = 1
 
 if not existing_file:
-    header = [ "DATE", "READS", "VOTES", "PARTS" ]
+
+    wb = Workbook()
     ws = wb.active
+    header = [ "DATE", "READS", "VOTES", "PARTS" ]
     ws.append(header)
     row += 1
 else:
