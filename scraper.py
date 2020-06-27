@@ -2,9 +2,9 @@
 # Ranks are language-dependant, so they wouldn't be scraped correctly
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
+from openpyxl import Workbook
 from datetime import datetime
 import os
-import xlsxwriter
 
 # ENTER YOUR STORY INFO HERE ##################################################
 url = 'https://www.wattpad.com/story/226573279-virtuel'
@@ -33,26 +33,20 @@ existing_file = False
 if(os.path.isfile(filename)):
     existing_file = True
 
-workbook = xlsxwriter.Workbook(filename)
-worksheet = workbook.add_worksheet()
+wb = Workbook()
+ws = wb.active
 
 row = 0
 column = 0
 
 if not existing_file:
     header = [ "DATE", "READS", "VOTES", "PARTS" ]
-    for item in header:
-        worksheet.write(row, column, item)
-        column += 1
+    ws.append(header)
     row += 1
-    column = 0
 
 today = datetime.today().strftime('%d/%m/%Y')
 
 data = [ today, reads, votes, parts ]
+ws.append(data)
 
-for item in data:
-    worksheet.write(row, column, item)
-    column += 1
-
-workbook.close()
+wb.save(filename)
