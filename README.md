@@ -21,7 +21,10 @@ First version of the snippet. Currently extracts & stores in a text file:
 # Plans for future 
 - Rankings
   - Although this would only work for the English version of Wattpad, as it is the basic language when accessing it via a fresh browser. This is problematic for people like me which publish stories in another language.
+  
 - Automatically extract your novel's title to use it in the script
   - So you don't have to enter it yourself, which is kind of pointless
+  
+- Handle "Ks" and "Ms" when gathering stats. Retrieving a story with 1000+ views/votes/parts will break the script (for now).
   
 - And more... feel free to message me your ideas => rochon.gabriel1@gmail.com
