@@ -8,6 +8,11 @@ import os
 import random
 import time
 
+try:
+    from openpyxl.cell import get_column_letter
+except ImportError:
+    from openpyxl.utils import get_column_letter
+
 # Source files
 from slicing import *
 
@@ -186,6 +191,20 @@ for i in range(3):
             if chap_inc > 0:
                 ws.cell(row, column, '(+' + str(chap_inc) + ')')
             column += 2
+
+    # Resize column dimensions
+    for i in range(ws.max_column):
+        i = i+1
+        if i == 1:
+            width = 20
+        else:
+            if i % 2 == 0:
+                width = 10
+            else:
+                width = 5
+
+        col = get_column_letter(i)
+        ws.column_dimensions[col].width = width
 
 ###############################################################################
 
