@@ -146,6 +146,7 @@ for item in data:
 sheet_titles = ['Reads', 'Votes', 'Comments']
 
 for i in range(3):
+
     if not existing_file:
         wb.create_sheet(sheet_titles[i] + ' per chap')
     ws = wb[sheet_titles[i] + ' per chap']
@@ -153,16 +154,27 @@ for i in range(3):
     row = 1
     column = 1
 
+    chap_inc = list()
+
     if not existing_file:
         for chap in chap_stats_list:
-            ws.cell(row, column, 'CHAP #' + str(column))
+            ws.cell(row, column, 'CHAP #' + str(int((column+1)/2)))
             ws.cell(row+1, column, chap[3])
-            column += 1
+            column += 2
         column = 1
+    # else:
+    #     row = ws.max_row+1
+    #     column = 1
+    #     for chap in chap_stats_list:
+    #         yesterday = ws.cell(row=row-1, column=column).value
+    #         chap_inc = chap[i] - int(yesterday)
+    #         column += 2
+
+    # print(chap_inc)
 
     row = ws.max_row + 1
     for chap in chap_stats_list:
         ws.cell(row, column, chap[i])
-        column += 1
+        column += 2
 
 wb.save(filename)
