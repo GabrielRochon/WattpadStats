@@ -12,7 +12,7 @@ import time
 from slicing import *
 
 # ENTER YOUR STORY INFO HERE ##################################################
-url = 'https://www.wattpad.com/story/224182827-jour-apr%C3%A8s-jour'
+url = 'https://www.wattpad.com/story/226573279-virtuel'
 ###############################################################################
 
 # MAIN PAGE ###################################################################
@@ -62,8 +62,10 @@ count = 1
 #     chap_reads = chap_soup.findChild("span", {"class": "reads"})
 #     chap_votes = chap_soup.findChild("span", {"class": "votes"})
 #     chap_comments = chap_soup.findChild("span", {"class": "comments on-comments"}).findChild("a")
+#     chap_title = chap_soup.findChild("header", {"class": "panel panel-reading text-center"}).findChild("h2").contents
+#     #print(chap_title[0])
 #
-#     chap_stats = [int(chap_reads.contents[2]), int(chap_votes.contents[2]), int(chap_comments.contents[0])]
+#     chap_stats = [int(chap_reads.contents[2]), int(chap_votes.contents[2]), int(chap_comments.contents[0]), chap_title[0]]
 #
 #     chap_stats_list.append(chap_stats)
 #
@@ -73,8 +75,7 @@ count = 1
 #     count += 1
 
 # Dummy values to avoid constant scraping
-chap_stats_list = [[75, 6, 0], [102, 9, 3], [64, 4, 5], [58, 4, 5], [53, 2, 12], [45, 3, 4], [43, 3, 4], [38, 3, 2], [51, 4, 8], [32, 3, 6], [39, 3, 6], [51, 3, 6], [30, 2, 5], [28, 3, 5], [49, 3, 8], [64, 3, 8], [85, 2, 6], [60, 2, 0], [41, 2, 0], [17, 1, 0]]
-
+chap_stats_list = [[36, 3, 0, "Mot de l'auteur\n"], [80, 6, 6, '01 | Flick Watson\n'], [60, 5, 2, '02 | Déréliction\n'], [50, 5, 2, '03 | Ça passe ou ça casse\n'], [46, 2, 0, "04 | Foutons le camp d'ici\n"], [33, 1, 0, '05 | En vol\n'], [27, 1, 0, '06 | Le jeu\n']]
 # print(chap_stats_list)
 
 ###############################################################################
@@ -155,6 +156,7 @@ for i in range(3):
     if not existing_file:
         for chap in chap_stats_list:
             ws.cell(row, column, 'CHAP #' + str(column))
+            ws.cell(row+1, column, chap[3])
             column += 1
         column = 1
 
