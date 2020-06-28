@@ -7,6 +7,10 @@ Modify the URL of your novel in scraper.py (top of script). Once it's done, simp
 I cannot stress enough that setting up an automated task (if you're on Windows) that executes the script every day at a set time is extremely important, as you wouldn't get realistic data on a fixed 24-hour span without it.
 
 # Versions
+## Version 1.2 (June 28th 2020)
+Bug fixes:
+- Corrected bug where thousands/millions views/reads would make the script crash. This is due to the fact that it would attempt to convert strings with Ks and Ms in it, then attempt to substract it.
+
 ## Version 1.1 (June 27th 2020)
 Additions:
 - Increments from yesterday are shown next to reads, votes and parts.
@@ -22,7 +26,7 @@ First version of the snippet. Currently extracts & stores in a text file:
 # Plans for future 
 - Rankings
   - Although this would only work for the English version of Wattpad, as it is the basic language when accessing it via a fresh browser. This is problematic for people like me which publish stories in another language.
-  
-- Handle "Ks" and "Ms" when gathering stats. Retrieving a story with 1000+ views/votes/parts will break the script (for now).
+
+- Look into a known bug where names with particular title with special characters would prevent creation of Excel file
   
 - And more... feel free to message me your ideas => rochon.gabriel1@gmail.com
