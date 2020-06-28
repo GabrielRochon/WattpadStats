@@ -56,32 +56,27 @@ for i in chapters_list:
 #   while accessing all of the stories' urls
 chap_stats_list = list()
 count = 1
-# for chap_url in urls:
-#     print('Reading chapter ' + str(count) + '...', end = ' ', flush = True)
-#
-#     # Get info
-#     chap_req = Request('http://wattpad.com/' + chap_url, headers={'User-Agent': 'Mozilla/5.0'})     # So bots don't 403 you
-#     chap_webpage = urlopen(chap_req).read()
-#     chap_soup = BeautifulSoup(chap_webpage, 'html.parser')
-#
-#     chap_reads = chap_soup.findChild("span", {"class": "reads"})
-#     chap_votes = chap_soup.findChild("span", {"class": "votes"})
-#     chap_comments = chap_soup.findChild("span", {"class": "comments on-comments"}).findChild("a")
-#     chap_title = chap_soup.findChild("header", {"class": "panel panel-reading text-center"}).findChild("h2").contents
-#     #print(chap_title[0])
-#
-#     chap_stats = [int(chap_reads.contents[2]), int(chap_votes.contents[2]), int(chap_comments.contents[0]), chap_title[0]]
-#
-#     chap_stats_list.append(chap_stats)
-#
-#     delay = random.random()*3 + 2            # Random delay from 2 to 5 secs
-#     time.sleep(delay)
-#     print('[OK] After ' + str(round(delay,2)) + ' seconds.')
-#     count += 1
+for chap_url in urls:
+    print('Reading chapter ' + str(count) + '...', end = ' ', flush = True)
 
-# Dummy values to avoid constant scraping
-chap_stats_list = [[36, 3, 0, "Mot de l'auteur\n"], [80, 6, 6, '01 | Flick Watson\n'], [60, 5, 2, '02 | Déréliction\n'], [50, 5, 2, '03 | Ça passe ou ça casse\n'], [46, 2, 0, "04 | Foutons le camp d'ici\n"], [33, 1, 0, '05 | En vol\n'], [27, 1, 0, '06 | Le jeu\n']]
-# print(chap_stats_list)
+    # Get info
+    chap_req = Request('http://wattpad.com/' + chap_url, headers={'User-Agent': 'Mozilla/5.0'})     # So bots don't 403 you
+    chap_webpage = urlopen(chap_req).read()
+    chap_soup = BeautifulSoup(chap_webpage, 'html.parser')
+
+    chap_reads = chap_soup.findChild("span", {"class": "reads"})
+    chap_votes = chap_soup.findChild("span", {"class": "votes"})
+    chap_comments = chap_soup.findChild("span", {"class": "comments on-comments"}).findChild("a")
+    chap_title = chap_soup.findChild("header", {"class": "panel panel-reading text-center"}).findChild("h2").contents
+
+    chap_stats = [int(chap_reads.contents[2]), int(chap_votes.contents[2]), int(chap_comments.contents[0]), chap_title[0]]
+
+    chap_stats_list.append(chap_stats)
+
+    delay = random.random()*3 + 2            # Random delay from 2 to 5 secs
+    time.sleep(delay)
+    print('[OK] After ' + str(round(delay,2)) + ' seconds.')
+    count += 1
 
 ###############################################################################
 
