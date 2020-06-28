@@ -5,6 +5,8 @@ from urllib.request import Request, urlopen
 from openpyxl import Workbook, load_workbook
 from datetime import datetime
 import os
+import random
+import time
 
 # Source files
 from slicing import *
@@ -40,8 +42,23 @@ chapters_list = chapters.findAll("a")
 for i in chapters_list:
     urls.append(i['href'])
 
-for item in urls:
-    print(item)
+# for item in urls:
+#     print(item)
+
+# Access every url to retrieve individual chapter stats
+# WARNING: Gotta be careful with this, as Wattpad may see this as a potential DDoS
+#   This process will take some time to ensure Wattpad doesn't blacklist our IP address
+#   while accessing all of the stories' urls
+count = 1
+for url in urls:
+    print('Reading chapter ' + str(count) + '...', end = ' ', flush = True)
+
+    # Get info...
+
+    delay = random.random()*3 + 2            # Random delay from 2 to 5 secs
+    time.sleep(delay)
+    print('[OK] After ' + str(round(delay,2)) + ' seconds.')
+    count += 1
 
 ###############################################################################
 
