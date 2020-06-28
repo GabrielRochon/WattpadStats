@@ -183,7 +183,7 @@ for i in range(3):
         column += 2
 
     # Increments
-    column = 2
+    column = 3
     if existing_file:
         for chap in chap_stats_list:
             yesterday = ws.cell(row=row-1, column=column-1).value
