@@ -12,6 +12,7 @@ Additions:
 - **Stats per chapters**: individual sheets are created for reads, votes and parts to show your chapters' individual growth in exposure!
   - This will give you a better idea of what your readers are reading particularily, instead of just general stats from the main worksheet.
 - Optimized console logs readability.
+
 Bug fixes:
 - Corrected bug where thousands/millions views/reads would make the script crash. This is due to the fact that it would attempt to convert strings with Ks and Ms in it, then attempt to substract it.
 
