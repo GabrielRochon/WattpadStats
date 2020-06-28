@@ -12,7 +12,7 @@ import time
 from slicing import *
 
 # ENTER YOUR STORY INFO HERE ##################################################
-url = 'https://www.wattpad.com/story/226573279-virtuel'
+url = 'https://www.wattpad.com/story/224182827-jour-apr%C3%A8s-jour'
 ###############################################################################
 
 # MAIN PAGE ###################################################################
@@ -49,6 +49,7 @@ for i in chapters_list:
 # WARNING: Gotta be careful with this, as Wattpad may see this as a potential DDoS
 #   This process will take some time to ensure Wattpad doesn't blacklist our IP address
 #   while accessing all of the stories' urls
+chap_stats_list = list()
 count = 1
 for chap_url in urls:
     print('Reading chapter ' + str(count) + '...', end = ' ', flush = True)
@@ -62,21 +63,16 @@ for chap_url in urls:
     chap_votes = chap_soup.findChild("span", {"class": "votes"})
     chap_comments = chap_soup.findChild("span", {"class": "comments on-comments"}).findChild("a")
 
-    chap_stats = [chap_reads.contents[2], chap_votes.contents[2], chap_comments.contents[0]]
+    chap_stats = [int(chap_reads.contents[2]), int(chap_votes.contents[2]), int(chap_comments.contents[0])]
 
-    for stat in chap_stats:
-        print('\'' + str(int(stat)) + '\'')
-    # chap_stats = chap_soup.findChild("div", {"class": "story-stats"})
-    #
-    # for child in chap_stats.contents:
-    #     print(child)
-    #print(chap_stats.prettify())
-
+    chap_stats_list.append(chap_stats)
 
     delay = random.random()*3 + 2            # Random delay from 2 to 5 secs
     time.sleep(delay)
     print('[OK] After ' + str(round(delay,2)) + ' seconds.')
     count += 1
+
+print(chap_stats_list)
 
 ###############################################################################
 
