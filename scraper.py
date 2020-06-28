@@ -141,8 +141,7 @@ for item in data:
             ws.cell(row, column, item)
     column += 1
 
-
-# SECOND WORKSHEET: READS PER CHAPTER
+# READS/VOTES/PARTS WORKSHEETS ################################################
 sheet_titles = ['Reads', 'Votes', 'Comments']
 
 for i in range(3):
@@ -159,7 +158,10 @@ for i in range(3):
     if not existing_file:
         for chap in chap_stats_list:
             ws.cell(row, column, 'CHAP #' + str(int((column+1)/2)))
+            ws.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column+1)
             ws.cell(row+1, column, chap[3])
+            ws.merge_cells(start_row=row+1, start_column=column, end_row=row+1, end_column=column+1)
+
             column += 2
         column = 1
 
@@ -177,5 +179,7 @@ for i in range(3):
             if chap_inc > 0:
                 ws.cell(row, column, '(+' + str(chap_inc) + ')')
             column += 2
+
+###############################################################################
 
 wb.save(filename)
