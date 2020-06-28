@@ -156,16 +156,23 @@ for i in range(3):
     chap_inc = list()
 
     if not existing_file:
+        ws.cell(row, column, 'DATE')
+        ws.column_dimensions['A'].width = 20
+        ws.merge_cells(start_row=row, start_column=column, end_row=row+1, end_column=column)
+        column += 1
+
         for chap in chap_stats_list:
             ws.cell(row, column, 'CHAP #' + str(int((column+1)/2)))
             ws.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column+1)
             ws.cell(row+1, column, chap[3])
             ws.merge_cells(start_row=row+1, start_column=column, end_row=row+1, end_column=column+1)
-
             column += 2
         column = 1
 
     row = ws.max_row + 1
+    ws.cell(row, column, today)
+    column += 1
+
     for chap in chap_stats_list:
         ws.cell(row, column, chap[i])
         column += 2
