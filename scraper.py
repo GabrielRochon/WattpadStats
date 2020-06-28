@@ -142,23 +142,25 @@ for item in data:
 
 
 # SECOND WORKSHEET: READS PER CHAPTER
-if not existing_file:
-    wb.create_sheet('Reads per chap')
+sheet_titles = ['Reads', 'Votes', 'Comments']
 
-ws = wb['Reads per chap']
+for i in range(3):
+    if not existing_file:
+        wb.create_sheet(sheet_titles[i] + ' per chap')
+    ws = wb[sheet_titles[i] + ' per chap']
 
-row = 1
-column = 1
-
-if not existing_file:
-    for chap in chap_stats_list:
-        ws.cell(row, column, 'CHAPTER ' + str(column))
-        column += 1
+    row = 1
     column = 1
 
-row = ws.max_row + 1
-for chap in chap_stats_list:
-    ws.cell(row, column, chap[0])
-    column += 1
+    if not existing_file:
+        for chap in chap_stats_list:
+            ws.cell(row, column, 'CHAP #' + str(column))
+            column += 1
+        column = 1
+
+    row = ws.max_row + 1
+    for chap in chap_stats_list:
+        ws.cell(row, column, chap[i])
+        column += 1
 
 wb.save(filename)
