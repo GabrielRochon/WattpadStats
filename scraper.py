@@ -18,7 +18,12 @@ from slicing import *
 
 # ENTER YOUR STORY INFO HERE ##################################################
 url = 'https://www.wattpad.com/story/226573279-virtuel'
+random_delay = True    # RECOMMENDED TO STAY TRUE FOR IP BLACKLISTING
 ###############################################################################
+
+print('###########################################')
+print('#     WattpadStats, by Gabriel Rochon     #')
+print('###########################################\n')
 
 # MAIN PAGE ###################################################################
 # Extract stats from your story page's HTML
@@ -37,7 +42,6 @@ for i in stats.children:
 
 title_wrapper = soup.findChild("div", {"class": "container"})
 title = title_wrapper.findChild("h1").contents[0][:-1]
-###############################################################################
 
 # EVERY CHAPTER ###############################################################
 # Get every chapter's URL and grab individual stats for each one of them
@@ -47,13 +51,16 @@ chapters_list = chapters.findAll("a")
 for i in chapters_list:
     urls.append(i['href'])
 
-# for item in urls:
-#     print(item)
-
 # Access every url to retrieve individual chapter stats
 # WARNING: Gotta be careful with this, as Wattpad may see this as a potential DDoS
 #   This process will take some time to ensure Wattpad doesn't blacklist our IP address
 #   while accessing all of the stories' urls
+print('Reading chapters, delaying reads so Wattpad doesn\'t block http requests.')
+print('This will take around ' + str(len(chapters_list)*2) + ' seconds.')
+print('(NOT RECOMMENDED) If you wish to speed up the process, remove the random delay option in scraper.py.\n')
+
+init_time = time.time()
+
 chap_stats_list = list()
 count = 1
 for chap_url in urls:
@@ -73,11 +80,13 @@ for chap_url in urls:
 
     chap_stats_list.append(chap_stats)
 
-    delay = random.random()*3 + 2            # Random delay from 2 to 5 secs
-    time.sleep(delay)
-    print('[OK] After ' + str(round(delay,2)) + ' seconds.')
+    if random_delay:
+        delay = random.random()*2 + 1            # Random delay from 1 to 3 secs
+        time.sleep(delay)
+    print('OK!')
     count += 1
 
+print('\n')
 ###############################################################################
 
 # OUTPUT TO EXCEL FILE ########################################################
@@ -203,4 +212,7 @@ for i in range(3):
 
 ###############################################################################
 
+print('Scraping ended in ' + str(round(time.time()-init_time,2)) + ' secs.')
+print('Thank you for using WattpadStats! :)\n')
+print('(c) Gabriel Rochon')
 wb.save(filename)
