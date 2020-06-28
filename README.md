@@ -11,6 +11,7 @@ I cannot stress enough that setting up an automated task (if you're on Windows) 
 Additions:
 - **Stats per chapters**: individual sheets are created for reads, votes and parts to show your chapters' individual growth in exposure!
   - This will give you a better idea of what your readers are reading particularily, instead of just general stats from the main worksheet.
+- Optimized console logs readability.
 Bug fixes:
 - Corrected bug where thousands/millions views/reads would make the script crash. This is due to the fact that it would attempt to convert strings with Ks and Ms in it, then attempt to substract it.
 
@@ -31,6 +32,8 @@ First version of the snippet. Currently extracts & stores in a text file:
   - Although this would only work for the English version of Wattpad, as it is the basic language when accessing it via a fresh browser. This is problematic for people like me which publish stories in another language.
   
 - Add styling to the spreadsheet. It's pretty boring right now!
+
+- Manage chapter deletion: this will cause massive spreadsheet issues if not managed properly.
 
 - Look into a known bug where names with particular title with special characters would prevent creation of Excel file
   
