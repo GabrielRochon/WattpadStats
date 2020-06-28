@@ -56,7 +56,7 @@ for i in chapters_list:
 #   This process will take some time to ensure Wattpad doesn't blacklist our IP address
 #   while accessing all of the stories' urls
 print('Reading chapters, delaying reads so Wattpad doesn\'t block http requests.')
-print('This will take around ' + str(len(chapters_list)*2) + ' seconds.')
+print('This will take around ' + str(len(chapters_list)*3) + ' seconds.')
 print('(NOT RECOMMENDED) If you wish to speed up the process, remove the random delay option in scraper.py.\n')
 
 init_time = time.time()
@@ -164,19 +164,18 @@ for i in range(3):
 
     chap_inc = list()
 
-    if not existing_file:
-        ws.cell(row, column, 'DATE')
-        ws.column_dimensions['A'].width = 20
-        ws.merge_cells(start_row=row, start_column=column, end_row=row+1, end_column=column)
-        column += 1
+    ws.cell(row, column, 'DATE')
+    ws.column_dimensions['A'].width = 20
+    ws.merge_cells(start_row=row, start_column=column, end_row=row+1, end_column=column)
+    column += 1
 
-        for chap in chap_stats_list:
-            ws.cell(row, column, 'CHAP #' + str(int((column+1)/2)))
-            ws.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column+1)
-            ws.cell(row+1, column, chap[3])
-            ws.merge_cells(start_row=row+1, start_column=column, end_row=row+1, end_column=column+1)
-            column += 2
-        column = 1
+    for chap in chap_stats_list:
+        ws.cell(row, column, 'CHAP #' + str(int((column+1)/2)))
+        ws.merge_cells(start_row=row, start_column=column, end_row=row, end_column=column+1)
+        ws.cell(row+1, column, chap[3])
+        ws.merge_cells(start_row=row+1, start_column=column, end_row=row+1, end_column=column+1)
+        column += 2
+    column = 1
 
     row = ws.max_row + 1
     ws.cell(row, column, today)
@@ -191,10 +190,11 @@ for i in range(3):
     if existing_file:
         for chap in chap_stats_list:
             yesterday = ws.cell(row=row-1, column=column-1).value
-            chap_inc = chap[i] - int(yesterday)
-            if chap_inc > 0:
-                ws.cell(row, column, '(+' + str(chap_inc) + ')')
-            column += 2
+            if yesterday is not None:
+                chap_inc = chap[i] - yesterday
+                if chap_inc > 0:
+                    ws.cell(row, column, '(+' + str(chap_inc) + ')')
+                column += 2
 
     # Resize column dimensions
     for i in range(ws.max_column):
