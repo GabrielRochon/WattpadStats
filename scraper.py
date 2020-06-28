@@ -50,10 +50,28 @@ for i in chapters_list:
 #   This process will take some time to ensure Wattpad doesn't blacklist our IP address
 #   while accessing all of the stories' urls
 count = 1
-for url in urls:
+for chap_url in urls:
     print('Reading chapter ' + str(count) + '...', end = ' ', flush = True)
 
-    # Get info...
+    # Get info
+    chap_req = Request('http://wattpad.com/' + chap_url, headers={'User-Agent': 'Mozilla/5.0'})     # So bots don't 403 you
+    chap_webpage = urlopen(chap_req).read()
+    chap_soup = BeautifulSoup(chap_webpage, 'html.parser')
+
+    chap_reads = chap_soup.findChild("span", {"class": "reads"})
+    chap_votes = chap_soup.findChild("span", {"class": "votes"})
+    chap_comments = chap_soup.findChild("span", {"class": "comments on-comments"}).findChild("a")
+
+    chap_stats = [chap_reads.contents[2], chap_votes.contents[2], chap_comments.contents[0]]
+
+    for stat in chap_stats:
+        print('\'' + str(int(stat)) + '\'')
+    # chap_stats = chap_soup.findChild("div", {"class": "story-stats"})
+    #
+    # for child in chap_stats.contents:
+    #     print(child)
+    #print(chap_stats.prettify())
+
 
     delay = random.random()*3 + 2            # Random delay from 2 to 5 secs
     time.sleep(delay)
