@@ -102,12 +102,13 @@ inc_parts = 0
 if not existing_file:
     wb = Workbook()
     ws = wb.active
+    ws.title = 'General'
     header = [ "DATE", "READS", "", "VOTES", "", "PARTS", "" ]
     ws.append(header)
     row += 1
 else:
     wb = load_workbook(filename=filename)
-    ws = wb.create_sheet('General')
+    ws = wb['General']
     row = ws.max_row + 1
 
     # Increments from yesterday
@@ -141,20 +142,23 @@ for item in data:
 
 
 # SECOND WORKSHEET: READS PER CHAPTER
-wb.create_sheet('Reads per chap')
+if not existing_file:
+    wb.create_sheet('Reads per chap')
+
 ws = wb['Reads per chap']
 
 row = 1
 column = 1
 
+if not existing_file:
+    for chap in chap_stats_list:
+        ws.cell(row, column, 'CHAPTER ' + str(column))
+        column += 1
+    column = 1
+
+row = ws.max_row + 1
 for chap in chap_stats_list:
     ws.cell(row, column, chap[0])
     column += 1
-    # print(chap[0])
-row += 1
-column = 0
-
-
-
 
 wb.save(filename)
