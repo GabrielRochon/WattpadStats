@@ -1,13 +1,16 @@
 # Basic web scraper that collects views, votes & parts of your Wattpad story
-# Ranks are language-dependant, so they wouldn't be scraped correctly
+# Libraries
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 from openpyxl import Workbook, load_workbook
 from datetime import datetime
 import os
 
+# Source files
+from slicing import *
+
 # ENTER YOUR STORY INFO HERE ##################################################
-url = 'https://www.wattpad.com/story/225711373-micronouvelles-tome-2'
+url = 'https://www.wattpad.com/story/226573279-virtuel'
 ###############################################################################
 
 # Extract stats from your story page's HTML
@@ -19,15 +22,18 @@ stats = soup.findChild("div", {"class": "meta"})
 leaves = list()
 for i in stats.children:
     if(i != '\n'):
-        leaves.append(i.contents[0])
+        if(len(leaves) < 2):
+            leaves.append(i['title'])
+        else:
+            leaves.append(i.contents[0])
 
 title_wrapper = soup.findChild("div", {"class": "container"})
 title = title_wrapper.findChild("h1").contents[0][:-1]
 
 # Slice those strings into numbers
-reads = leaves[0][1:-6]                 # Removes last 6 chars: "100 Reads" - " Reads" = 100
-votes = leaves[1][1:-6]                 # Removes last 6 chars: "100 Votes" - " Votes" = 100
-parts = leaves[2][:-11]                 # Removes last 11 chars: "7 Part Story" - " Part Story" = 7
+reads = slice_reads(leaves[0])
+votes = slice_votes(leaves[1])
+parts = slice_parts(leaves[2])
 
 # Populate Excel file with numerical stats
 filename = title + ' stats.xlsx'
